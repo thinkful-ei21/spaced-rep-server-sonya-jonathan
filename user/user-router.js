@@ -106,8 +106,8 @@ router.post('/', (req, res) => {
     });
 });
 
-// TESING ONLY
-// router.get('/:id', (req, res) => {
+//TESING ONLY
+// router.get('/', (req, res) => {
 
 //   return User.find()
 //     .then(users => res.json(users))
