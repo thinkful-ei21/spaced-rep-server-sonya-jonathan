@@ -10,6 +10,8 @@ const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 
 const usersRouter = require('./user/user-router');
+const authRouter = require('./auth/auth-router');
+const protectedRouter = require('./protected/protected-router');
 
 const app = express();
 
@@ -30,7 +32,9 @@ app.use(
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-app.use('/api/users/', usersRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/protected', protectedRouter);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

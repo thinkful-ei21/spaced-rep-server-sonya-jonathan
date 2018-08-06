@@ -74,7 +74,7 @@ router.post('/', (req, res) => {
   }
 
   //POST acion
-  let { username, password } = req.body;
+  let { username, password, firstName, lastName } = req.body;
 
   return User.find({ username })
     .count()
@@ -91,6 +91,8 @@ router.post('/', (req, res) => {
     })
     .then(hash => {
       return User.create({
+        firstName,
+        lastName,
         username,
         password: hash
       });
