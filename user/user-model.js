@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   lastName: String,
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true }
+  // ref questions
 });
 
 userSchema.set('toObject', {

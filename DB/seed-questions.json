@@ -1,0 +1,66 @@
+
+// mongoimport --uri mongodb://Dev:Dev1987@ds115022.mlab.com:15022/spaced-rep --collection questions --file DB/seed-questions.json --jsonArray
+
+[
+  {
+  "question": "Car",
+  "answer": "Carro",
+  "numCorrect": 0,
+  "numAttempts": 0
+  },
+  {
+  "question": "Cat",
+  "answer": "Gato",
+  "numCorrect": 0,
+  "numAttempts": 0
+  },
+  {
+  "question": "Dog",
+  "answer": "Perro",
+  "numCorrect": 0,
+  "numAttempts": 0
+  },
+  {
+  "question": "Bush",
+  "answer": "Arbusto",
+  "numCorrect": 0,
+  "numAttempts": 0
+  },
+  {
+  "question": "Tree",
+  "answer": "Arbol",
+  "numCorrect": 0,
+  "numAttempts": 0
+  },
+  {
+  "question": "Water",
+  "answer": "Agua",
+  "numCorrect": 0,
+  "numAttempts": 0
+  },
+  {
+  "question": "Sky",
+  "answer": "Cielo",
+  "numCorrect": 0,
+  "numAttempts": 0
+  },
+  {
+  "question": "Cloud",
+  "answer": "Nube",
+  "numCorrect": 0,
+  "numAttempts": 0
+  },
+  {
+  "question": "Fire",
+  "answer": "Fuego",
+  "numCorrect": 0,
+  "numAttempts": 0
+  },
+  {
+  "question": "Wind",
+  "answer": "Viento",
+  "numCorrect": 0,
+  "numAttempts": 0
+  }
+  
+]
