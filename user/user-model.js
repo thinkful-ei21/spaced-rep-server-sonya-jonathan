@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.set('toObject', {
   virtuals: true,
-  versionKet: false,
+  versionKey: false,
   transform: (doc, ret) => {
     delete ret._id;
     delete ret.password;
