@@ -53,9 +53,9 @@ router.post('/', (req, res, next) => {
       return user.save();
     })
     .then(user => {
-      // console.log(user);
-      const answer = question.answer;
-      return res.json({ feedback, answer });
+      console.log(question);
+      const { answer, numCorrect, numAttempts } = question;
+      return res.json({ feedback, answer, numCorrect, numAttempts });
     })
     .catch(err => next(err));
 });
