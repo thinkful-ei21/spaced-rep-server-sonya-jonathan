@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const questionSchema = new mongoose.Schema({
   question: { type: String, required: true, unique: true },
   answer: { type: String, required: true, unique: true },
+  next: Boolean,
   numCorrect: { type: Number, required: true },
   numAttempts: { type: Number, required: true }
 });

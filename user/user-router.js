@@ -1,7 +1,9 @@
 'use strict';
 
 const express = require('express');
+
 const User = require('../user/user-model');
+const Questions = require('../question/question-model');
 
 const router = express.Router();
 
@@ -74,7 +76,7 @@ router.post('/', (req, res) => {
 
   //POST acion
   let { username, password, firstName, lastName } = req.body;
-
+  let userQuestions = [];
   return User.find({ username })
     .count()
     .then(count => {
@@ -86,10 +88,20 @@ router.post('/', (req, res) => {
           location: 'username'
         });
       }
+    })
+    .then(() => {
+      Questions.find()
+        .then(questions => {
+          questions.forEach(question => {
+            userQuestions.push(question);
+          });
+        })
+        .catch(err => console.log(err));
       return User.hashPassword(password);
     })
     .then(hash => {
       return User.create({
+        questions: userQuestions,
         firstName,
         lastName,
         username,
