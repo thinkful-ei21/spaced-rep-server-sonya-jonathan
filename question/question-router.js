@@ -23,7 +23,10 @@ router.get('/one', (req, res, next) => {
   const id = req.user.id;
   User.findById(id)
     .then(user => user.questions[0])
-    .then(data => res.json(data.question))
+    .then(data => {
+      const { question, numCorrect, numAttempts } = data;
+      return res.json({ question, numCorrect, numAttempts });
+    })
     .catch(err => next(err));
 });
 
