@@ -83,10 +83,4 @@ router.post('/', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// router.delete('/', (req, res) => {
-//   Question.deleteOne()
-//     .then(data => res.json(data))
-//     .catch(err => console.log(err));
-// });
-
 module.exports = router;
