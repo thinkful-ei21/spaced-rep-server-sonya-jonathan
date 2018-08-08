@@ -38,23 +38,29 @@ router.post('/', (req, res, next) => {
   User.findById(id)
     .then(user => {
       const currQuestion = user.questions[user.head];
-      const head = user.head;
+      const currIndex = user.head;
 
+      // if user gives correct answer, increase score and multipy mValue by 2
       if (currQuestion.answer === userAnswer) {
         feedback = true;
         currQuestion.numCorrect++;
         currQuestion.numAttempts++;
         currQuestion.mValue *= 2;
       } else {
+      // if user gives incorrect answer increase attempts and reset mValue to 1
         feedback = false;
         currQuestion.numAttempts++;
         currQuestion.mValue = 1;
       }
+      // set the head to currentQuestions's next value
       user.head = currQuestion.next;
 
       let insertAfterQuestion = currQuestion;
       let currQ = currQuestion;
 
+      // loop through questions to find the question object at the index that 
+      // matches the mValue of the current question
+      // set insertAfterQuestion to equal the question at the mValue index
       for (let i = 0; i < currQuestion.mValue; i++) {
         let index = currQ.next;
         if (currQuestion.mValue > user.questions.length) {
@@ -65,12 +71,15 @@ router.post('/', (req, res, next) => {
         currQ = user.questions[currQ.next];
       }
 
+      // if the insertion point is at the end, make the currQuestion point to null
       if (insertAfterQuestion.next === null) {
         currQuestion.next = null;
+      // otherwise set the currentQuestion to point to the node after the insertion point
       } else {
         currQuestion.next = insertAfterQuestion.next;
       }
-      insertAfterQuestion.next = head;
+      // set the insertion point to point to the original index of the currentQuestion
+      insertAfterQuestion.next = currIndex;
 
       user.save();
 
