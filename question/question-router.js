@@ -38,6 +38,8 @@ router.post('/', (req, res, next) => {
   User.findById(id)
     .then(user => {
       const currQuestion = user.questions[user.head];
+      console.log(user.head);
+      //console.log(currQuestion);
       const head = user.head;
 
       if (currQuestion.answer === userAnswer) {
@@ -51,16 +53,37 @@ router.post('/', (req, res, next) => {
         currQuestion.mValue = 1;
       }
       user.head = currQuestion.next;
-      console.log(user.head);
+      // console.log(user.head);
 
-      let firstQuestion = currQuestion;
+      let insertAfterQuestion = currQuestion;
+
+      let curr = currQuestion;
+      
       for (let i = 0; i < currQuestion.mValue; i++) {
-        let index = currQuestion.next;
-        firstQuestion = user.questions[index];
+        // console.log('curr',curr, 'currQ',currQuestion);
+        let index = currQuestion.next; // index = 1
+        curr = user.questions[curr.next];
+        // currQuestion = user.questions[currQuestion.next]
+        // console.log('currentQuestion: ',currQuestion)
+        
+        console.log(index);
+        if (currQuestion.mValue > user.questions.length) {
+          currQuestion.mValue = user.questions.length;
+          index = user.questions.length-1;
+        }
+        // insertAfterQuestion = user.questions[index];
+        
         // condition that prevents m being bigger the arr.length - make item last item
       }
-      currQuestion.next = firstQuestion.next;
-      firstQuestion.next = head;
+      console.log(insertAfterQuestion)
+      if (insertAfterQuestion.next === null) {
+        // set the curr question node to the last one, next=null
+        // set insertion question to point to curr question. next before its set to null
+        currQuestion.next = null;
+      } else {
+        currQuestion.next = insertAfterQuestion.next;
+      }
+      insertAfterQuestion.next = head;
 
       user.save();
 
