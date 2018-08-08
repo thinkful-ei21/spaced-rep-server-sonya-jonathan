@@ -34,29 +34,41 @@ router.post('/', (req, res, next) => {
   const id = req.user.id;
   const { userAnswer } = req.body;
   let feedback = '';
-  let question;
 
   User.findById(id)
     .then(user => {
-      question = user.questions[0];
-      if (question.answer === userAnswer) {
-        question.numCorrect++;
-        question.numAttempts++;
-        user.questions.push(question);
-        user.questions = user.questions.slice(1);
-        // console.log('right', user.questions);
+      const currQuestion = user.questions[user.head];
+      const head = user.head;
+
+      if (currQuestion.answer === userAnswer) {
         feedback = true;
+        currQuestion.numCorrect++;
+        currQuestion.numAttempts++;
+        currQuestion.mValue *= 2;
       } else {
-        question.numAttempts++;
-        user.questions.splice(2, 0, question);
-        user.questions = user.questions.slice(1);
-        // console.log('wrong', user.questions);
         feedback = false;
+        currQuestion.numAttempts++;
+        currQuestion.mValue = 1;
       }
-      return user.save();
+      user.head = currQuestion.next;
+      console.log(user.head);
+
+      let firstQuestion = currQuestion;
+      for (let i = 0; i < currQuestion.mValue; i++) {
+        let index = currQuestion.next;
+        firstQuestion = user.questions[index];
+        // condition that prevents m being bigger the arr.length - make item last item
+      }
+      currQuestion.next = firstQuestion.next;
+      firstQuestion.next = head;
+
+      user.save();
+
+      return currQuestion;
     })
-    .then(() => {
-      const { answer, numCorrect, numAttempts } = question;
+    .then(currQuestion => {
+      const { answer, numCorrect, numAttempts } = currQuestion;
+      console.log(answer, numCorrect, numAttempts);
       return res.json({ feedback, answer, numCorrect, numAttempts });
     })
     .catch(err => next(err));

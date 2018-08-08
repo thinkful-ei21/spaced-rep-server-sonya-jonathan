@@ -92,8 +92,16 @@ router.post('/', (req, res) => {
     .then(() => {
       Questions.find()
         .then(questions => {
-          questions.forEach(question => {
-            userQuestions.push(question);
+          questions.forEach((question, index) => {
+            let q = {
+              question: question.question,
+              answer: question.answer,
+              next: index === questions.length - 1 ? null : index + 1,
+              mValue: 1,
+              numCorrect: 0,
+              numAttempts: 0
+            };
+            userQuestions.push(q);
           });
         })
         .catch(err => console.log(err));
@@ -108,13 +116,12 @@ router.post('/', (req, res) => {
         password: hash
       });
     })
-    .then(user => {
-      return res.status(201).json(user);
-    })
+    .then(user => res.status(201).json(user))
     .catch(err => {
       if (err.reason === 'ValidationError') {
         return res.status(err.code).json(err);
       }
+      console.log(err);
       res.status(500).json({ code: 500, message: 'Internal server error' });
     });
 });

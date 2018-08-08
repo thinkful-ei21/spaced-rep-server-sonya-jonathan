@@ -1,63 +1,43 @@
 [
   {
   "question": "Car",
-  "answer": "Carro",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Carro"
   },
   {
   "question": "Cat",
-  "answer": "Gato",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Gato"
   },
   {
   "question": "Dog",
-  "answer": "Perro",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Perro"
   },
   {
   "question": "Bush",
-  "answer": "Arbusto",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Arbusto"
   },
   {
   "question": "Tree",
-  "answer": "Arbol",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Arbol"
   },
   {
   "question": "Water",
-  "answer": "Agua",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Agua"
   },
   {
   "question": "Sky",
-  "answer": "Cielo",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Cielo"
   },
   {
   "question": "Cloud",
-  "answer": "Nube",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Nube"
   },
   {
   "question": "Fire",
-  "answer": "Fuego",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Fuego"
   },
   {
   "question": "Wind",
-  "answer": "Viento",
-  "numCorrect": 0,
-  "numAttempts": 0
+  "answer": "Viento"
   }
   
 ]

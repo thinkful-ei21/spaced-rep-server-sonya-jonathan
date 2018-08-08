@@ -8,7 +8,17 @@ const userSchema = new mongoose.Schema({
   lastName: String,
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  questions: { type: Array, required: true }
+  questions: [
+    {
+      question: { type: String, required: true },
+      answer: { type: String, required: true },
+      next: Number,
+      mValue: Number,
+      numCorrect: { type: Number, required: true },
+      numAttempts: { type: Number, required: true }
+    }
+  ],
+  head: { type: Number, default: 0 }
 });
 
 userSchema.set('toObject', {
