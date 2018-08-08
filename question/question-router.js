@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => {
 router.get('/one', (req, res, next) => {
   const id = req.user.id;
   User.findById(id)
-    .then(user => user.questions[0])
+    .then(user => user.questions[user.head])
     .then(data => {
       const { question, numCorrect, numAttempts } = data;
       return res.json({ question, numCorrect, numAttempts });
@@ -38,8 +38,6 @@ router.post('/', (req, res, next) => {
   User.findById(id)
     .then(user => {
       const currQuestion = user.questions[user.head];
-      console.log(user.head);
-      //console.log(currQuestion);
       const head = user.head;
 
       if (currQuestion.answer === userAnswer) {
@@ -53,32 +51,21 @@ router.post('/', (req, res, next) => {
         currQuestion.mValue = 1;
       }
       user.head = currQuestion.next;
-      // console.log(user.head);
 
       let insertAfterQuestion = currQuestion;
+      let currQ = currQuestion;
 
-      let curr = currQuestion;
-      
       for (let i = 0; i < currQuestion.mValue; i++) {
-        // console.log('curr',curr, 'currQ',currQuestion);
-        let index = currQuestion.next; // index = 1
-        curr = user.questions[curr.next];
-        // currQuestion = user.questions[currQuestion.next]
-        // console.log('currentQuestion: ',currQuestion)
-        
-        console.log(index);
+        let index = currQ.next;
         if (currQuestion.mValue > user.questions.length) {
-          currQuestion.mValue = user.questions.length;
-          index = user.questions.length-1;
+          currQuestion.mValue = user.questions.length - 1;
+          index = user.questions.length - 1;
         }
-        // insertAfterQuestion = user.questions[index];
-        
-        // condition that prevents m being bigger the arr.length - make item last item
+        insertAfterQuestion = user.questions[index];
+        currQ = user.questions[currQ.next];
       }
-      console.log(insertAfterQuestion)
+
       if (insertAfterQuestion.next === null) {
-        // set the curr question node to the last one, next=null
-        // set insertion question to point to curr question. next before its set to null
         currQuestion.next = null;
       } else {
         currQuestion.next = insertAfterQuestion.next;
@@ -91,7 +78,6 @@ router.post('/', (req, res, next) => {
     })
     .then(currQuestion => {
       const { answer, numCorrect, numAttempts } = currQuestion;
-      console.log(answer, numCorrect, numAttempts);
       return res.json({ feedback, answer, numCorrect, numAttempts });
     })
     .catch(err => next(err));
