@@ -1,43 +1,42 @@
 [
   {
-  "question": "Car",
-  "answer": "Carro"
+  "question": "CAR",
+  "answer": "CARRO"
   },
   {
-  "question": "Cat",
-  "answer": "Gato"
+  "question": "CAT",
+  "answer": "GATO"
   },
   {
-  "question": "Dog",
-  "answer": "Perro"
+  "question": "DOG",
+  "answer": "PERRO"
   },
   {
-  "question": "Bush",
-  "answer": "Arbusto"
+  "question": "BUSH",
+  "answer": "ARBUSTO"
   },
   {
-  "question": "Tree",
-  "answer": "Arbol"
+  "question": "TREE",
+  "answer": "ARBOL"
   },
   {
-  "question": "Water",
-  "answer": "Agua"
+  "question": "WATER",
+  "answer": "AGUA"
   },
   {
-  "question": "Sky",
-  "answer": "Cielo"
+  "question": "SKY",
+  "answer": "CIELO"
   },
   {
-  "question": "Cloud",
-  "answer": "Nube"
+  "question": "CLOUD",
+  "answer": "NUBE"
   },
   {
-  "question": "Fire",
-  "answer": "Fuego"
+  "question": "FIRE",
+  "answer": "FUEGO"
   },
   {
-  "question": "Wind",
-  "answer": "Viento"
+  "question": "WIND",
+  "answer": "VIENTO"
   }
-  
 ]
