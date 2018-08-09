@@ -4,20 +4,13 @@ const express = require('express');
 const passport = require('passport');
 
 const User = require('../user/user-model');
+const Questions = require('../question/question-model');
 
 const router = express.Router();
 
 router.use(
   passport.authenticate('jwt', { session: false, failWithError: true })
 );
-
-router.get('/', (req, res, next) => {
-  const id = req.user.id;
-  User.findById(id)
-    .then(user => user.questions)
-    .then(data => res.json(data))
-    .catch(err => next(err));
-});
 
 router.get('/one', (req, res, next) => {
   const id = req.user.id;
@@ -105,6 +98,36 @@ router.post('/', (req, res, next) => {
       const streak = response.user.streak;
       return res.json({ feedback, answer, numCorrect, numAttempts, streak });
     })
+    .catch(err => next(err));
+});
+
+router.put('/', (req, res, next) => {
+  const id = req.user.id;
+  const updatedArr = [];
+  Questions.find()
+    .then(questions => {
+      questions.forEach((question, index) => {
+        let q = {
+          question: question.question,
+          answer: question.answer,
+          next: index === questions.length - 1 ? null : index + 1,
+          mValue: 1,
+          numCorrect: 0,
+          numAttempts: 0
+        };
+        updatedArr.push(q);
+      });
+    })
+    .then(() => {
+      return User.findByIdAndUpdate(
+        id,
+        {
+          $set: { head: 0, questions: updatedArr, streak: 0 }
+        },
+        { new: true }
+      );
+    })
+    .then(user => res.json(user))
     .catch(err => next(err));
 });
 

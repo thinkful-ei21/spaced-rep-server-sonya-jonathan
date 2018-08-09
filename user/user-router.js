@@ -7,7 +7,7 @@ const Questions = require('../question/question-model');
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -75,8 +75,8 @@ router.post('/', (req, res) => {
   }
 
   //POST acion
-  let { username, password, firstName, lastName } = req.body;
-  let userQuestions = [];
+  const { username, password, firstName, lastName } = req.body;
+  const userQuestions = [];
   return User.find({ username })
     .count()
     .then(count => {
@@ -104,7 +104,7 @@ router.post('/', (req, res) => {
             userQuestions.push(q);
           });
         })
-        .catch(err => console.log(err));
+        .catch(err => next(err));
       return User.hashPassword(password);
     })
     .then(hash => {
@@ -113,7 +113,6 @@ router.post('/', (req, res) => {
         firstName,
         lastName,
         username,
-        streak: 0,
         password: hash
       });
     })
