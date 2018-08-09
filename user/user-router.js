@@ -113,6 +113,7 @@ router.post('/', (req, res) => {
         firstName,
         lastName,
         username,
+        streak: 0,
         password: hash
       });
     })

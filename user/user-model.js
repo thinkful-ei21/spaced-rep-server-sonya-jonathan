@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
       numAttempts: { type: Number, required: true }
     }
   ],
+  streak: { type: Number, required: true },
   head: { type: Number, default: 0 }
 });
 

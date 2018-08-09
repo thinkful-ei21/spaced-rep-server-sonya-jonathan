@@ -22,10 +22,19 @@ router.get('/', (req, res, next) => {
 router.get('/one', (req, res, next) => {
   const id = req.user.id;
   User.findById(id)
-    .then(user => user.questions[user.head])
+    .then(user => {
+      const currQuestion = user.questions[user.head];
+      const streak = user.streak;
+      const data = {
+        currQuestion,
+        streak
+      };
+      return data;
+    })
     .then(data => {
-      const { question, numCorrect, numAttempts } = data;
-      return res.json({ question, numCorrect, numAttempts });
+      const { question, numCorrect, numAttempts } = data.currQuestion;
+      const streak = data.streak;
+      return res.json({ question, numCorrect, numAttempts, streak });
     })
     .catch(err => next(err));
 });
@@ -43,14 +52,17 @@ router.post('/', (req, res, next) => {
       // if user gives correct answer, increase score and multipy mValue by 2
       if (currQuestion.answer === userAnswer.toUpperCase()) {
         feedback = true;
+        currQuestion.mValue *= 2;
         currQuestion.numCorrect++;
         currQuestion.numAttempts++;
-        currQuestion.mValue *= 2;
+        user.streak++;
       } else {
-        // if user gives incorrect answer increase attempts and reset mValue to 1
+        // if user gives incorrect answer increase attempts
+        // and reset mValue to 1 and streak to 0
         feedback = false;
-        currQuestion.numAttempts++;
         currQuestion.mValue = 1;
+        currQuestion.numAttempts++;
+        user.streak = 0;
       }
       // set the head to currentQuestions's next value
       user.head = currQuestion.next;
@@ -82,12 +94,16 @@ router.post('/', (req, res, next) => {
       insertAfterQuestion.next = currIndex;
 
       user.save();
-
-      return currQuestion;
+      let userWithQuestion = {
+        user,
+        currQuestion
+      };
+      return userWithQuestion;
     })
-    .then(currQuestion => {
-      const { answer, numCorrect, numAttempts } = currQuestion;
-      return res.json({ feedback, answer, numCorrect, numAttempts });
+    .then(response => {
+      const { answer, numCorrect, numAttempts } = response.currQuestion;
+      const streak = response.user.streak;
+      return res.json({ feedback, answer, numCorrect, numAttempts, streak });
     })
     .catch(err => next(err));
 });
