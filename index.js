@@ -33,6 +33,10 @@ app.use(
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
+app.get('/', (req, res, next) => { 
+  console.log('is this firigin?')
+  res.sendStatus(200); 
+});
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/protected', protectedRouter);
@@ -42,7 +46,7 @@ app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
   next(err);
-})
+});
 
 // Custom Error Handler
 app.use((err, req, res, next) => {
@@ -58,7 +62,7 @@ app.use((err, req, res, next) => {
 function runServer(port = PORT) {
   const server = app
     .listen(port, () => {
-      console.info(`App listening on port ${server.address().port}`);
+      console.info(`App listening on port ${port}`);
     })
     .on('error', err => {
       console.error('Express failed to start');
