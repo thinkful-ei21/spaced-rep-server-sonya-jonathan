@@ -16,19 +16,8 @@ router.get('/one', (req, res, next) => {
   const id = req.user.id;
   User.findById(id)
     .then(user => {
-      console.log(user);
-      const currQuestion = user.questions[user.head];
+      const { question, numCorrect, numAttempts } = user.questions[user.head];
       const streak = user.streak;
-      const data = {
-        currQuestion,
-        streak
-      };
-      return data;
-    })
-    .then(data => {
-      console.log(data);
-      const { question, numCorrect, numAttempts } = data.currQuestion;
-      const streak = data.streak;
       return res.json({ question, numCorrect, numAttempts, streak });
     })
     .catch(err => next(err));
@@ -89,10 +78,7 @@ router.post('/', (req, res, next) => {
       insertAfterQuestion.next = currIndex;
 
       user.save();
-      let userWithQuestion = {
-        user,
-        currQuestion
-      };
+      let userWithQuestion = { user, currQuestion };
       return userWithQuestion;
     })
     .then(response => {
@@ -130,12 +116,10 @@ router.put('/', (req, res, next) => {
       );
     })
     .then(() => {
-      // let returnObj = {};
       User.findById(id).then(user => {
         const currQuestion = user.questions[user.head];
         const { question, numAttempts, numCorrect } = currQuestion;
         let streak = user.streak;
-        // returnObj = ;
         return res.json({ question, numAttempts, numCorrect, streak });
       });
     })
