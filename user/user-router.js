@@ -76,7 +76,6 @@ router.post('/', (req, res, next) => {
 
   //POST acion
   const { username, password, firstName, lastName } = req.body;
-  const userQuestions = [];
   return User.find({ username })
     .count()
     .then(count => {
@@ -88,12 +87,22 @@ router.post('/', (req, res, next) => {
           location: 'username'
         });
       }
+      return User.hashPassword(password);
     })
-    .then(() => {
-      Questions.find()
-        .then(questions => {
-          questions.forEach((question, index) => {
-            let q = {
+    .then(hash => {
+      return User.create({
+        firstName,
+        lastName,
+        username,
+        password: hash
+      });
+    })
+    .then(user => {
+      const id = user.id;
+      return User.findById(id).then(user => {
+        return Questions.find().then(questions => {
+          user.questions = questions.map((question, index) => {
+            return {
               question: question.question,
               answer: question.answer,
               next: index === questions.length - 1 ? null : index + 1,
@@ -101,21 +110,12 @@ router.post('/', (req, res, next) => {
               numCorrect: 0,
               numAttempts: 0
             };
-            userQuestions.push(q);
           });
-        })
-        .catch(err => next(err));
-      return User.hashPassword(password);
-    })
-    .then(hash => {
-      return User.create({
-        questions: userQuestions,
-        firstName,
-        lastName,
-        username,
-        password: hash
+          return user.save();
+        });
       });
     })
+
     .then(user => res.status(201).json(user))
     .catch(err => {
       if (err.reason === 'ValidationError') {

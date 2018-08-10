@@ -16,6 +16,7 @@ router.get('/one', (req, res, next) => {
   const id = req.user.id;
   User.findById(id)
     .then(user => {
+      console.log(user);
       const currQuestion = user.questions[user.head];
       const streak = user.streak;
       const data = {
@@ -25,6 +26,7 @@ router.get('/one', (req, res, next) => {
       return data;
     })
     .then(data => {
+      console.log(data);
       const { question, numCorrect, numAttempts } = data.currQuestion;
       const streak = data.streak;
       return res.json({ question, numCorrect, numAttempts, streak });
@@ -127,7 +129,16 @@ router.put('/', (req, res, next) => {
         { new: true }
       );
     })
-    .then(user => res.json(user))
+    .then(() => {
+      // let returnObj = {};
+      User.findById(id).then(user => {
+        const currQuestion = user.questions[user.head];
+        const { question, numAttempts, numCorrect } = currQuestion;
+        let streak = user.streak;
+        // returnObj = ;
+        return res.json({ question, numAttempts, numCorrect, streak });
+      });
+    })
     .catch(err => next(err));
 });
 
