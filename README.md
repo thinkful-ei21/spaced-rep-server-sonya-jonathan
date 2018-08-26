@@ -1,45 +1,93 @@
-# Thinkful Backend Template
+# Welcome to Cartas Contra Español!
 
-A template for developing and deploying Node.js apps.
+Cartas Contra Español is a language learning app that uses spaced repetition.  If the user translates the word correctly it will be pushed further down the list.  If they get the translation wrong, they will see the word more often until they answer it correctly. 
 
-## Getting started
+__________________________
+## Below are links to the live app and GitHub Repo for the server side:
+- [Live App](https://sr-app-sj.herokuapp.com/dashboard)
+- [Server Repo](https://github.com/thinkful-ei21/spaced-rep-server-sonya-jonathan)
 
-### Setting up a project
 
-* Move into your projects directory: `cd ~/YOUR_PROJECTS_DIRECTORY`
-* Clone this repository: `git clone https://github.com/Thinkful-Ed/backend-template YOUR_PROJECT_NAME`
-* Move into the project directory: `cd YOUR_PROJECT_NAME`
-* Install the dependencies: `npm install`
-* Create a new repo on GitHub: https://github.com/new
-    * Make sure the "Initialize this repository with a README" option is left unchecked
-* Update the remote to point to your GitHub repository: `git remote set-url origin https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME`
+__________________________
+## Screenshots of the Game
 
-### Working on the project
+### Desktop View
 
-* Move into the project directory: `cd ~/YOUR_PROJECTS_DIRECTORY/YOUR_PROJECT_NAME`
-* Run the development task: `npm start`
-    * Starts a server running at http://localhost:8080
-    * Automatically restarts when any of your files change
+##### Landing Page
+![Landing Page](./screen-shots/LG_LP.jpg)
 
-## Databases
+##### Registration Page
+![Registration Page](./screen-shots/LG_RP.jpg)
 
-By default, the template is configured to connect to a MongoDB database using Mongoose.  It can be changed to connect to a PostgreSQL database using Knex by replacing any imports of `db-mongoose.js` with imports of `db-knex.js`, and uncommenting the Postgres `DATABASE_URL` lines in `config.js`.
+##### Game Screen
+![Game Search](./screen-shots/LG_GS.jpg)
 
-## Deployment
+##### Feedback Screen
+![Feedback Screen](./screen-shots/LG_FS.jpg)
 
-Requires the [Heroku CLI client](https://devcenter.heroku.com/articles/heroku-command-line).
+### Mobile View
 
-### Setting up the project on Heroku
+##### Landing Page
+![Landing Page](./screen-shots/SM_LP.jpg)
 
-* Move into the project directory: `cd ~/YOUR_PROJECTS_DIRECTORY/YOUR_PROJECT_NAME`
-* Create the Heroku app: `heroku create PROJECT_NAME`
+##### Registration Page
+![Registration Page](./screen-shots/SM_RP.jpg)
 
-* If your backend connects to a database, you need to configure the database URL:
-    * For a MongoDB database: `heroku config:set DATABASE_URL=mongodb://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME`
-    * For a PostgreSQL database: `heroku config:set DATABASE_URL=postgresql://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME`
+##### Game Screen
+![Game Search](./screen-shots/SM_GS.jpg)
 
-* If you are creating a full-stack app, you need to configure the client origin: `heroku config:set CLIENT_ORIGIN=https://www.YOUR_DEPLOYED_CLIENT.com`
+##### Feedback Screen
+![Feedback Screen](./screen-shots/SM_FS.jpg)
 
-### Deploying to Heroku
+__________________________
+## Tech Stack
 
-* Push your code to Heroku: `git push heroku master`
+### Cartas Contra Español is built using the following:
+ 
+* HTML5
+* Cascading Style Sheet/Flex Box
+* JavaScript
+* NodeJS
+* MongoDB
+
+### Client-Side
+
+* React
+* React Redux
+* Redux Thunk
+* JWT-Decode
+
+### Server-Side
+
+* Express
+* Mongoose
+* Morgan
+* Passport
+* JSONWedToken
+* Bcryptjs
+__________________________
+## Project's Key Parts Locations
+
+### Client-Side
+* Actions
+* Components 
+* Local Storage
+* Reducers
+* Store
+* Styles
+* Tests
+* Validators
+
+### Server-Side
+* Models
+* Passport
+* Routes
+* Tests
+* Server - (index.js)
+
+## Dev Setup:
+
+* Clone both reops (this one and the [Server Repo](https://github.com/thinkful-ei21/spaced-rep-server-sonya-jonathan))
+
+* Once you have them cloned run `npm install` on both in order to get all dependancies.
+
