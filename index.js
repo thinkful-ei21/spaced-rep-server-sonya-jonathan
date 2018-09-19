@@ -33,9 +33,9 @@ app.use(
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-app.get('/', (req, res, next) => { 
-  console.log('is this firigin?')
-  res.sendStatus(200); 
+app.get('/', (req, res, next) => {
+  console.log('Server is deployed and running!');
+  res.sendStatus(200);
 });
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
